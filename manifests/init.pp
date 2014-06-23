@@ -1,6 +1,6 @@
 class librarian_puppet {
 
-  case $::operatingsystem {
+  if $::operatingsystem == 'ubuntu' {
     'ubuntu': {
       if !defined(Package['rubygems']) {
         package{'rubygems':
@@ -8,17 +8,11 @@ class librarian_puppet {
           before  => Package['librarian-puppet']
         }
       }
-
-      package {'librarian-puppet':
-        ensure    => '1.0.1',
-        provider  => 'gem',
-      }
     }
-    'windows': {
-      exec {'install librarian puppet':
-        command => 'gem install librarian-puppet -v 1.0.1 --no-ri --no-rdoc'
+  }
 
-      }
-    }
+  package {'librarian-puppet':
+    ensure    => '1.0.1',
+    provider  => 'gem',
   }
 }
