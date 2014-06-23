@@ -1,12 +1,10 @@
 class librarian_puppet {
 
   if $::operatingsystem == 'ubuntu' {
-    'ubuntu': {
-      if !defined(Package['rubygems']) {
-        package{'rubygems':
-          ensure  => present,
-          before  => Package['librarian-puppet']
-        }
+    if !defined(Package['rubygems']) {
+      package{'rubygems':
+        ensure  => present,
+        before  => Package['librarian-puppet']
       }
     }
   }
